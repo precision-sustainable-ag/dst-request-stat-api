@@ -1,0 +1,10 @@
+{
+    "Initial Object": "array",
+    "Resource Name": "string",
+    "Institution or Author": "string",
+    "URL": "string",
+    "Last Modified": "string",
+    "Cover Crops": "string",
+    "State": "string",
+    "Zone": "string"
+}

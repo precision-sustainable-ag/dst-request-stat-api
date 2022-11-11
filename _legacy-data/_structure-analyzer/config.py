@@ -1,0 +1,19 @@
+from os import getcwd
+
+PROJECT_DIR = getcwd()
+DATA_OBJECT_DIR=f'{PROJECT_DIR}/..'
+
+DESCRIPTIONS_DIR = f'{DATA_OBJECT_DIR}/descriptions'
+IMAGE_LOCATIONS_DIR = f'{DATA_OBJECT_DIR}/image-locations'
+INFORMATION_SHEET_DIR = f'{DATA_OBJECT_DIR}/InformationSheet'
+SIDEBAR_DIR = f'{DATA_OBJECT_DIR}/sidebar'
+ZONE_4_DIR = f'{DATA_OBJECT_DIR}/zone4'
+ZONE_5_DIR = f'{DATA_OBJECT_DIR}/zone5'
+ZONE_6_DIR = f'{DATA_OBJECT_DIR}/zone6'
+ZONE_7_DIR = f'{DATA_OBJECT_DIR}/zone7'
+
+
+CROP_DESCRIPTIONS_FILE = f'{DESCRIPTIONS_DIR}/crop-descriptions.json'
+INFORMATION_SHEET_SOURCE_FILE = f'{INFORMATION_SHEET_DIR}/sources.json'
+SIDEBAR_CATEGORIES_FILE = f'{SIDEBAR_DIR}/sidebar-categories.json'
+SIDEBAR_FILTERS_FILE = f'{SIDEBAR_DIR}/sidebar-filters.json'

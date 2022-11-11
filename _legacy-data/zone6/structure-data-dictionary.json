@@ -1,0 +1,30 @@
+{
+    "Initial Object": "array",
+    "_id": {
+        "$oid": "string"
+    },
+    "Variable": "string",
+    "Description": "string",
+    "Data Source": [
+        "string"
+    ],
+    "USDA PLANTS Term": "string",
+    "Values": "string",
+    "Category": "string",
+    "Filter Field": "bool",
+    "Type": "string",
+    "Information Sheet": "bool",
+    "Units/Details": "string",
+    "Filter Category": "string",
+    "Information Sheet Category": "string",
+    "Tool Dictionary": "bool",
+    "__id": "string",
+    "Team Notes": "string",
+    "Cover Crop Goals": [
+        "string"
+    ],
+    "Cover Crop Goals copy": "string",
+    "Description Notes for Data Verification": "string",
+    "Values Description": "string",
+    "Legumes Only": "bool"
+}

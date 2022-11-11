@@ -1,0 +1,13 @@
+{
+    "Initial Object": "array",
+    "_id": {
+        "$oid": "string"
+    },
+    "name": "string",
+    "description": "string",
+    "type": "string",
+    "filters": [
+        "string"
+    ],
+    "__id": "string"
+}

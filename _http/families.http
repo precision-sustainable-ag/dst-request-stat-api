@@ -1,0 +1,12 @@
+@family_id = {{get_families.response.body.data[0].id}}
+
+###
+# @name get_families
+GET {{protocol}}://{{domain}}/families
+
+###
+# @name get_family
+GET {{protocol}}://{{domain}}/families/{{family_id}}
+
+
+

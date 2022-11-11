@@ -1,0 +1,19 @@
+@zone_id = {{get_zones.response.body.data[0].id}}
+
+###
+# @name get_zones
+GET {{protocol}}://{{domain}}/zones
+
+###
+# @name get_zone
+GET {{protocol}}://{{domain}}/zones/{{zone_id}}
+
+###
+# @name get_zones_crops
+GET {{protocol}}://{{domain}}/zones/{{zone_id}}/crops
+?groups[0]=4
+&attributes[0]=243
+&attributes[1]=242
+
+
+

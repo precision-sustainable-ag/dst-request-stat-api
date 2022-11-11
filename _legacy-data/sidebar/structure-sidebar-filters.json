@@ -1,0 +1,16 @@
+{
+    "Initial Object": "array",
+    "_id": {
+        "$oid": "string"
+    },
+    "name": "string",
+    "dataDictionaryName": "string",
+    "type": "string",
+    "values": "string",
+    "Species Selector Tool Category": [
+        "string"
+    ],
+    "__id": "string",
+    "maxSize": "int",
+    "symbol": "string"
+}

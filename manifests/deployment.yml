@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: dstselectorapi 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dstselectorapi
+  template:
+    metadata:
+      labels:
+        app: dstselectorapi 
+    spec:
+      containers:
+        - name: dstselectorapi 
+          image: containerregistry4pd7i.azurecr.io/dstselectorapi
+          ports:
+          - containerPort: 80

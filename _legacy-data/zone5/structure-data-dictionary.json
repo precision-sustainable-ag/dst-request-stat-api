@@ -1,0 +1,20 @@
+{
+    "Initial Object": "array",
+    "_id": {
+        "$oid": "string"
+    },
+    "Variable": "string",
+    "Category": "string",
+    "Description": "string",
+    "Type": "string",
+    "Units/Details": "string",
+    "Values": "string",
+    "Filter Field": "bool",
+    "Information Sheet": "bool",
+    "__id": "string",
+    "Cover Crop Goals": [
+        "string"
+    ],
+    "Description Notes for Data Verification": "string",
+    "Values Description": "string"
+}

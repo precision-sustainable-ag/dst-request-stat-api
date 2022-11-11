@@ -1,0 +1,12 @@
+@region_id = {{get_regions.response.body.data[0].id}}
+
+###
+# @name get_regions
+GET {{protocol}}://{{domain}}/regions
+
+###
+# @name get_region
+GET {{protocol}}://{{domain}}/regions/{{region_id}}
+
+
+
