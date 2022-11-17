@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: dststatapi 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dststatapi
+  template:
+    metadata:
+      labels:
+        app: dststatapi 
+    spec:
+      containers:
+        - name: dststatapi 
+          image: containerregistry4pd7i.azurecr.io/dststatapi
+          ports:
+          - containerPort: 80
