@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const HasScopes = require('../app/http/middleware/HasScopes');
+const Public = require('../app/http/middleware/Public');
 const { RequestsController } = require('../app/http/controllers/RequestsController');
 const { CreateRequestRequest: CreateRequest } = require('../app/http/requests/requests/CreateRequestRequest');
 const { ListRequestsRequest: ListRequest } = require('../app/http/requests/requests/ListRequestsRequest');
@@ -16,11 +17,11 @@ const Controller = RequestsController.factory();
 
 const router = Router();
 
-router.post('/', HasScopes(['_create']), CreateRequest.handle(),Controller.create);
-router.get('/', HasScopes(['_read']), ListRequest.handle(),Controller.list);
-router.get('/:id', HasScopes(['_read']), GetRequest.handle(),Controller.retrieve);
-router.put('/:id', HasScopes(['_update']), UpdateRequest.handle(),Controller.update);
-router.delete('/:id', HasScopes(['_delete']), DeleteRequest.handle(),Controller.delete);
+router.post('/',Public , CreateRequest.handle(),Controller.create);
+router.get('/', Public, ListRequest.handle(),Controller.list);
+router.get('/:id', Public, GetRequest.handle(),Controller.retrieve);
+// router.put('/:id',Public, UpdateRequest.handle(),Controller.update);
+// router.delete('/:id', Public, DeleteRequest.handle(),Controller.delete);
 
 module.exports =  router
 
