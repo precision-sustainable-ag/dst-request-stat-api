@@ -1,4 +1,3 @@
-const { CropData } = require('../app/facades/CropData');
 const {ModelsProvider} = require('../app/providers/ModelsProvider')
 
 
@@ -12,7 +11,6 @@ async function run(){
         await migration.sync();
     }
 
-    await CropData.CreateView()
 }
 
 run();
