@@ -1,57 +1,26 @@
+const { DatabaseProvider } = require("../../app/providers/DatabaseProvider");
+const { ValidatorProvider } = require("../../app/providers/ValidatorProvider");
 const { Model } = require("../models/Model");
 
 
 class ModelsService {
 
     static _model;
-    static _rules;
+    static _schema;
 
     static model(){
         return Model;        
     }
 
-    static Rules(){
+    static Schema(){
         return {};
     }
 
-    static async Sync(){
-        const crops = await CoverCropsService.GetCrops();
+    static async Add(data){
+        const model = this.getModel();
+        const data = this.Validate(data);
 
-        for(let crop of crops){
-            await this.Add(crop);
-        }
-    }
-
-
-    static getModel(){
-        if(this._model) return this._model;
-
-        const model = this.model();
-
-        model.register();
-
-        return this._model = model;
-    }
-
-
-    static getRules(){
-        if(this._rules) return this._rules;
-
-        return this._rules = this.Rules();
-    }
-
-
-    static Validate(data){
-        const rules = this.getRules();
-        return ValidatorProvider.factory().validate({data,rules});
-    }
-
-
-
-    async Add(data){
-        data = CropsService.Validate(data);// redundant, but there is no point in moving forward with upsert if invalid payload. saves processing time.
-
-        const record = await Crop.findOne({where:{id:data.id}, paranoid: false});
+        const record = await model.findOne({where:{id:data.id}, paranoid: false});
 
         if(!record){
             return this.Create(data);
@@ -60,21 +29,48 @@ class ModelsService {
         return this.Update(record, data);
     }
 
-    async Create(data) {
-        data = CropsService.Validate(data);
+    static async Create(data) {
+        const model = this.getModel();
+        data = this.Validate(data);
 
-        return Crop.create(data);
+
+        return model.create(data);
     }
 
-    async Update(record, data) {
-        data = CropsService.Validate(data);
+    static async Update(record, data) {
+        data = this.Validate(data);
 
         return record.update(data);
     }
 
 
+    static getModel(){
+        if(this._model) return this._model;
+
+        const model = this.model();
+
+        model.register(DatabaseProvider);
+
+        return this._model = model;
+    }
+
+
+    static getSchema(){
+        if(this._schema) return this._schema;
+
+        return this._schema = this.Schema();
+    }
+
+
+    static Validate(data){
+        const schema = this.getSchema();
+        return ValidatorProvider.factory().validate({schema,rules});
+    }
+
+
+
 }
 
 module.exports = {
-    CropsService
+    ModelsService
 }

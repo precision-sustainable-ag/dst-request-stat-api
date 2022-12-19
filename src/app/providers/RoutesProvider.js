@@ -5,7 +5,7 @@ const {Provider} = require('../../framework/providers/Provider');
 
 const ROUTES = {};
 
-class RoutesProvider extends Provider {
+class RoutesProvider extends Provider{
     
     /**
      * use this if registration order matters for your models.
@@ -16,12 +16,8 @@ class RoutesProvider extends Provider {
         return [
             /**
              * we are excluding these routers becuase 
-             * the are subrouters in another router.
+             * the are subroutes in another router.
              */
-            'cropsZones.js',
-            'attributes.js',
-            'attributeValues.js',
-            'cropsZonesAttributes.js',
         ];
     }
 
@@ -35,10 +31,9 @@ class RoutesProvider extends Provider {
             for(let file of files){
                 if(exclude.includes(file)) continue;
                 
-                const prefix = `/${file.replace('.js','')}`;
                 const module = await import(app_path(`${dir}/${file}`))
                 const router = module.default;
-                routers[prefix] = router;
+                routers[file] = router;
 
             }
 
@@ -49,12 +44,12 @@ class RoutesProvider extends Provider {
 
         const routers = await this.getRouters();
 
-        for(let [prefix, router] of Object.entries(routers)) {
-            app.use(prefix,router);
-            ROUTES[prefix] = router;
+        for(let [file, router] of Object.entries(routers)) {
+            router.register(app)
+            ROUTES[file] = router;
         }
 
-        Log.Info({message:Object.keys(ROUTES),heading:'Registered Routers'});
+        Log.Info({message:Object.keys(ROUTES),heading:'Registered Routes'});
 
         return true;
     }

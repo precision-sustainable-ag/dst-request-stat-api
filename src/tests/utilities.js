@@ -1,5 +1,4 @@
 
-
 class It {
 
     static ShouldReturnStatus(req, status){
@@ -10,11 +9,11 @@ class It {
         });
     }
 
-    static ShouldReturnObjectType(req,object){
-        return it(`should return object property with value ${object}`, async () => {
+    static ShouldReturnObjectType(req,_type){
+        return it(`should return object property with value ${_type}`, async () => {
             await req().then(res => {
-                expect(res.body.object).toBeTruthy();
-                expect(res.body.object).toBe(object);
+                expect(res.body.type).toBeTruthy();
+                expect(res.body.type).toBe(_type);
             });
         });
     }
@@ -71,27 +70,6 @@ class Expect {
         expect(record.id).toBeTruthy();
         expect(record.createdAt).toBeTruthy();
         expect(record.updatedAt).toBeTruthy();
-    }
-
-    static CropRecord(record){
-        Expect.DatabaseRecord(record);
-        Expect.CropObject(record);
-    }
-    
-    static CropObject(record){
-        expect(record.label).toBeTruthy();
-        expect(record.scientificName).toBeTruthy();
-        expect(record.usdaSymbol).toBeTruthy();
-    }
-
-    static FamilyRecord(record){
-        Expect.DatabaseRecord(record);
-        Expect.FamilyObject(record);
-    }
-
-    static FamilyObject(record){
-        expect(record.commonName).toBeTruthy();
-        expect(record.scientificName).toBeTruthy();
     }
 
 }

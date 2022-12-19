@@ -29,7 +29,7 @@ services:
       dockerfile: Dockerfile.dev
       args:
         - PORT=${APP_PORT}
-    command: sh -c  "npm run db-fresh && npm run db-seed && npm run dev"
+    command: sh -c  "npm run db-reset && npm run migrate && npm run dev"
     ports:
       - ${APP_PORT}:${APP_PORT}
     env_file:
