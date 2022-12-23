@@ -1,11 +1,17 @@
 const { DataTypes } = require('sequelize');
 const { Model } = require('../../framework/models/Model')
+const crypto = require('crypto');
 
 /**
  * For more information on sequelize attributes & options
  * please visit https://sequelize.org/docs/v6/core-concepts/model-basics/#column-options
  */
 class Request extends Model {
+
+    static GenerateUUID(ip,userAgent) {
+        return crypto.createHash('sha256').update(`${ip}${userAgent}`).digest('base64');
+    }
+
 
     /**
      * For more information on sequelize attributes & options
@@ -37,7 +43,7 @@ class Request extends Model {
                 allowNull: false,
             },
             clientUserAgent: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
             contentType: {
@@ -45,7 +51,7 @@ class Request extends Model {
                 allowNull: false,
             },
             authorization: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
             uuid: {
@@ -53,19 +59,21 @@ class Request extends Model {
                 allowNull: false,
             },
             headers: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
             body: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: true,
             },
             parameters: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: true,
             },
         }
     }
+
+    
 
     /** 
      * leave null for sequelize to infer 

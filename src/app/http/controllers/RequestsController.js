@@ -9,6 +9,8 @@ class RequestsController extends Controller {
         const params = req.validated.params;
         const payload = req.validated.body;
 
+        payload.uuid = Request.GenerateUUID(req.clientIp, req.clientUserAgent)
+
         const resource = await Request.create(payload);
 
         return resource;

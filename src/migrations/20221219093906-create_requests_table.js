@@ -32,7 +32,7 @@ module.exports = {
           allowNull: false,
       },
       client_user_agent: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           allowNull: false,
       },
       content_type: {
@@ -40,7 +40,7 @@ module.exports = {
           allowNull: false,
       },
       authorization: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           allowNull: false,
       },
       uuid: {
@@ -48,15 +48,15 @@ module.exports = {
           allowNull: false,
       },
       headers: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           allowNull: false,
       },
       body: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           allowNull: true,
       },
       parameters: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           allowNull: true,
       }, 
       created_at: {

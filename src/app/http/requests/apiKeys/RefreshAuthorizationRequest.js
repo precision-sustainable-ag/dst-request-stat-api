@@ -1,9 +1,8 @@
 const bodyParser = require('body-parser');
 const {Request} = require('../../../../framework/requests/Request');
-const { Request:RequestModel } = require('../../../models/Request');
 
 
-class CreateRequestRequest extends Request {
+class RefreshAuthorizationRequest extends Request {
    
     /**
      * unless other middleware is introduced between the request handler and the controller handler,
@@ -55,9 +54,9 @@ class CreateRequestRequest extends Request {
      * https://spec.openapis.org/oas/v3.0.0#schema-object
      */
     body(){
-        return RequestModel.schema({exclude:[{prop:'autoIncrement',value:true},'uuid']});
+        return {};
     }
 
 }
 
-module.exports = { CreateRequestRequest }
+module.exports = { RefreshAuthorizationRequest }

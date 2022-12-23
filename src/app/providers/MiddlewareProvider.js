@@ -12,7 +12,7 @@ class MiddlewareProvider {
          * https://www.npmjs.com/package/cors
          */
         app.use(Cors);
-        // app.use(Auth());
+        app.use(Auth());
         // registeration order matters...
    
     }

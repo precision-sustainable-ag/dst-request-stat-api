@@ -5,14 +5,14 @@ const axios = require('axios');
 class HttpClient {
 
 
-    static async post(url, data){
+    static async post(url, data,conf){
 
-        return axios.post(url, data);
+        return axios.post(url, data,conf);
 
     }
 
-    static async get(url, params={}){
-        return axios.get(url, {params});
+    static async get(url, params={},conf={}){
+        return axios.get(url,{params,...conf});
     }
     
 }
