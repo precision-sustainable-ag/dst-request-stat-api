@@ -1,29 +1,34 @@
-const {Router} = require('express');
-const HasScopes = require('../app/http/middleware/HasScopes');
+const { RequestsController } = require("../app/http/controllers/RequestsController");
+const { CreateRequestRequest } = require("../app/http/requests/requests/CreateRequestRequest");
+const { ListRequestsRequest } = require("../app/http/requests/requests/ListRequestsRequest");
+const { RetrieveRequestRequest } = require("../app/http/requests/requests/RetrieveRequestRequest");
+const { CreateRequestResource } = require("../app/http/resources/requests/CreateRequestResource");
+const { ListRequestsResource } = require("../app/http/resources/requests/ListRequestsResource");
+const { RetrieveRequestResource } = require("../app/http/resources/requests/RetrieveRequestResource");
+const { Route } = require("../framework/routing/Route");
+const { Router } = require("../framework/routing/Router");
+const Auth = require('../app/http/middleware/Auth');
+const KeyAuth = require('../app/http/middleware/KeyAuth');
 const Public = require('../app/http/middleware/Public');
-const { RequestsController } = require('../app/http/controllers/RequestsController');
-const { CreateRequestRequest: CreateRequest } = require('../app/http/requests/requests/CreateRequestRequest');
-const { ListRequestsRequest: ListRequest } = require('../app/http/requests/requests/ListRequestsRequest');
-const { RetrieveRequestRequest: GetRequest } = require('../app/http/requests/requests/RetrieveRequestRequest');
-const { UpdateRequestRequest: UpdateRequest } = require('../app/http/requests/requests/UpdateRequestRequest');
-const { DeleteRequestRequest: DeleteRequest } = require('../app/http/requests/requests/DeleteRequestRequest');
 
-/**
- * We call the controller factory method
- * because this will create the controller and wrap all of the controller functions
- * with a handler function that returns a valid ExpressJS Middleware function.
- */
-const Controller = RequestsController.factory();
+module.exports = Router.expose({path:'/requests', routes: [
 
-const router = Router();
+    Route.post({path:'/', summary:"Create a Request Object", description:'REQUIRES an API Key (created through Data Auth Service). If you have created an API Key and this request is still not accepting the key, try refreshing the keys (theres an endpoint for that btw ;)',
+        request: CreateRequestRequest,
+        handler:RequestsController.factory().create,
+        response: CreateRequestResource
+    }).middleware([KeyAuth()]),
 
-router.post('/',Public , CreateRequest.handle(),Controller.create);
-router.get('/', Public, ListRequest.handle(),Controller.list);
-router.get('/:id', Public, GetRequest.handle(),Controller.retrieve);
-// router.put('/:id',Public, UpdateRequest.handle(),Controller.update);
-// router.delete('/:id', Public, DeleteRequest.handle(),Controller.delete);
+    Route.get({path:'/', summary:"Get List of Requests Objects", description:'REQUIRES an Authorization token with the scope "stats_read"',
+        request: ListRequestsRequest,
+        handler:RequestsController.factory().list,
+        response: ListRequestsResource
+    }).middleware([Auth('stats_read')]),
 
-module.exports =  router
+    Route.get({path:'/{id}', summary:"Retrieve a Request Object", description:'REQUIRES an Authorization token with the scope "stats_read"',
+        request: RetrieveRequestRequest,
+        handler: RequestsController.factory().retrieve,
+        response: RetrieveRequestResource
+    }).middleware([Auth('stats_read')]),
 
-
-
+]});

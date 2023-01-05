@@ -1,6 +1,4 @@
-const { UnAuthorized } = require('../../app/exceptions/UnAuthorized');
-const { Log } = require('../../app/providers/LoggingProvider');
-const { Resource } = require('../../app/http/resources/Resource');
+const { UnauthorizedError } = require('../errors/UnauthorizedError');
 
 
 class Controller {
@@ -24,15 +22,14 @@ class Controller {
         return  async (req, res, next) => {
             try{
 
-                if(!req.authorized) throw new UnAuthorized();
+                if(!req.authorized) throw new UnauthorizedError();
                 
                 const result = await method(req)
 
-                if(result instanceof Resource){
-                    return result.render({res,req});
-                }
+                res.data = result?.data ? result.data : result;
+                res.count = result?.count;
 
-                return res.send(result);
+                next();
 
             } catch(err){
                 next(err);

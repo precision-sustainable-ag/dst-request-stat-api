@@ -1,19 +1,22 @@
 
+
 module.exports = [
 
-    // regions have many zones
+    // examples have tags
     // {
-    //     label: 'regions have many zones',
+    //     label: 'examples have many tags',
     //     parent: {
-    //         model: Region,
+    //         model: Example,
     //         relation: 'hasMany',
     //         options: {}
     //     },
     //     child: {
-    //         model: Zone,
+    //         model: Tag,
     //         relation: 'belongsTo',
     //         options: {}
     //     },
     // },
+    // groups have many crops
+    
 
 ]

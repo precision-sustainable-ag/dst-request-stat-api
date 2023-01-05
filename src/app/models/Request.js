@@ -1,12 +1,17 @@
 const { DataTypes } = require('sequelize');
-const { Model } = require('../../framework/models/Model');
-var crypto = require('crypto');
+const { Model } = require('../../framework/models/Model')
+const crypto = require('crypto');
 
 /**
  * For more information on sequelize attributes & options
  * please visit https://sequelize.org/docs/v6/core-concepts/model-basics/#column-options
  */
 class Request extends Model {
+
+    static GenerateUUID(ip,userAgent) {
+        return crypto.createHash('sha256').update(`${ip}${userAgent}`).digest('base64');
+    }
+
 
     /**
      * For more information on sequelize attributes & options
@@ -38,7 +43,7 @@ class Request extends Model {
                 allowNull: false,
             },
             clientUserAgent: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
             contentType: {
@@ -46,7 +51,7 @@ class Request extends Model {
                 allowNull: false,
             },
             authorization: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
             uuid: {
@@ -54,32 +59,21 @@ class Request extends Model {
                 allowNull: false,
             },
             headers: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
             body: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: true,
             },
             parameters: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: true,
             },
         }
     }
 
-    /**
-     * For more information on sequelize relations
-     * please visit https://sequelize.org/docs/v6/core-concepts/assocs/
-     */
-    static hooks(){
-        return {
-        }
-    }
-
-    static GenerateUUID(ip,userAgent) {
-        return crypto.createHash('sha256').update(`${ip}${userAgent}`).digest('base64');
-    }
+    
 
     /** 
      * leave null for sequelize to infer 
@@ -103,6 +97,17 @@ class Request extends Model {
      */
     static options(){
         return {}
+    }
+
+
+    /**
+     * Visit sequlize docs for list of available hooks and their firing order.
+     * https://sequelize.org/docs/v6/other-topics/hooks/#available-hooks
+     */
+    static hooks(){
+        return {
+
+        }
     }
 
 

@@ -3,6 +3,7 @@ const { getFilesFrom, app_path } = require('../support/helpers/path');
 const { Log } = require('./LoggingProvider');
 const Associations = require('../models/Associations');
 const {Provider} = require('../../framework/providers/Provider');
+const { VirtualModel } = require('../../framework/models/VirtualModel');
 
 
 const MODELS = {};
@@ -18,8 +19,13 @@ class ModelsProvider extends Provider {
         ];
     }
 
+    /**
+     * 
+     * @returns list of virtual model classes
+     */
     static virtuals(){
         return [
+            
         ];
     }
 
@@ -27,6 +33,10 @@ class ModelsProvider extends Provider {
         return [
             'Associations',
         ];
+    }
+
+    static isVirtualModel(model){
+        return (model.prototype instanceof VirtualModel);
     }
 
     static async getModels(){
@@ -57,7 +67,7 @@ class ModelsProvider extends Provider {
         return models;
     }
 
-    static async registerModel(model){
+    static async registerModel(model, dbProvider){
 
         // is this model already registered?
         if(model.getTable() in MODELS) return;
@@ -78,28 +88,28 @@ class ModelsProvider extends Provider {
                 // some models might reference themselves.
                 if(parent.getTable() == model.getTable()) continue;
                 // register parent model.
-                await this.registerModel(parent);
+                await this.registerModel(parent,dbProvider);
             }
         }
 
         // register this model
-        await model.register();
+        await model.register(dbProvider);
         // add model to models registry map.
         MODELS[model.getTable()] = model;
     }
 
-    static async register(){
+    static async register(app, dbProvider){
 
         const models = await this.getModels();
         const virtuals = this.virtuals();
 
         // first register all models
         for(let model of models){
-            await this.registerModel(model);
+            await this.registerModel(model,dbProvider);
         }
         
         for(let model of virtuals){
-            await this.registerModel(model);
+            await this.registerModel(model,dbProvider);
         }
 
         for(let association of Associations){
@@ -116,10 +126,10 @@ class ModelsProvider extends Provider {
         return true;
     }
 
-    static factory(){
+    static factory(dbProvider){
         if(Object.keys(MODELS).length <= 0){
             return new Promise((resolve, reject)=>{
-                ModelsProvider.register()
+                ModelsProvider.register(null,dbProvider)
                 .then((registered)=>{resolve(MODELS)})
                 .catch(err => reject(err));
             });
