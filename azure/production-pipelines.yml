@@ -11,12 +11,12 @@ resources:
 variables:
 
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '1249f4c0-0ac6-47cb-9d98-7c15ca1b3d76'
+  dockerRegistryServiceConnection: '3ca70a85-472c-4bb6-bef8-3efbe1d4f27c'
   imageRepository: 'dststatapi'
   containerRegistry: 'containerregistry4pd7i.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'containerregistry4pd7i1566681f-auth'
+  imagePullSecret: 'containerregistry4pd7i27399355-auth'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -67,6 +67,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
     - upload: manifests
       artifact: manifests
 
@@ -80,7 +81,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'precisionsustainableagdstrequeststatapi-2109.production'
+    environment: 'precisionsustainableagdstrequeststatapi-7821.production'
     strategy:
       runOnce:
         deploy:
@@ -103,13 +104,14 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
+
   - deployment: DeployPullRequest
     displayName: Deploy Pull request
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
     pool:
       vmImage: $(vmImageName)
 
-    environment: 'precisionsustainableagdstrequeststatapi-2109.$(k8sNamespaceForPR)'
+    environment: 'precisionsustainableagdstrequeststatapi-7821.$(k8sNamespaceForPR)'
     strategy:
       runOnce:
         deploy:
@@ -143,6 +145,7 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
+
           - task: Kubernetes@1
             name: get
             displayName: 'Get services in the new namespace'
